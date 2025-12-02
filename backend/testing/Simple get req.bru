@@ -1,0 +1,18 @@
+meta {
+  name: Simple get req
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Bob",
+    "email": "bob@gmail.com"
+  }
+}
