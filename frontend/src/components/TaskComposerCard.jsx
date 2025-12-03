@@ -1,4 +1,57 @@
+import { useState } from "react";
+import { useTasksStore } from "../tasksStore";
+
 function TaskComposerCard() {
+  const { createTask, loading, error } = useTasksStore();
+
+  // Enums to make sure we use valid values in paylaod
+  const STATUS = ["todo", "in_progress", "done"];
+  const UI_STATUS = [
+    { value: "todo", label: "To Do" },
+    { value: "in_progress", label: "In Progress" },
+    { value: "done", label: "Done" },
+  ];
+  const PRIORITY = ["low", "medium", "high", "critical"];
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("todo");
+  const [priority, setPriority] = useState("medium");
+  const [dueDate, setDueDate] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setStatus("todo");
+    setPriority("medium");
+    setDueDate("");
+    setSuccess(false);
+  };
+
+  const isValidStatus = (val) => STATUS.includes(val);
+  const isValidPriority = (val) => PRIORITY.includes(val);
+
+  const handleSubmit = async () => {
+    if (!title.trim()) return;
+    setSuccess(false);
+
+    if (!isValidStatus(status)) return;
+    if (!isValidPriority(priority)) return;
+    const payload = {
+      title: title.trim(),
+      description: description.trim() || undefined,
+      status: status,
+      priority,
+      dueDate: dueDate || undefined,
+    };
+    await createTask(payload);
+    if (!error) {
+      setSuccess(true);
+      resetForm();
+    }
+  };
+
   return (
     <div className="card bg-base-100 shadow-xl border border-base-300 h-full">
       <div className="card-body space-y-4 h-full flex flex-col">
@@ -20,7 +73,10 @@ function TaskComposerCard() {
                 type="text"
                 className="input input-bordered"
                 placeholder="Enter task title here"
-                readOnly
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                disabled={loading}
+                required
               />
             </div>
 
@@ -33,7 +89,9 @@ function TaskComposerCard() {
               <textarea
                 className="textarea textarea-bordered flex-1 min-h-0"
                 placeholder="Add any additional details about the task here"
-                readOnly
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                disabled={loading}
               />
             </div>
           </div>
@@ -46,12 +104,15 @@ function TaskComposerCard() {
               </div>
               <select
                 className="select select-bordered"
-                defaultValue="todo"
-                disabled
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                disabled={loading}
               >
-                <option value="todo">To Do</option>
-                <option value="in-progress">In Progress</option>
-                <option value="done">Done</option>
+                {UI_STATUS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </label>
             <label className="form-control">
@@ -62,13 +123,15 @@ function TaskComposerCard() {
               </div>
               <select
                 className="select select-bordered"
-                defaultValue="high"
-                disabled
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+                disabled={loading}
               >
-                <option value="urgent">Urgent</option>
+                {/* categoires are critical|high|medium|low */}
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
                 <option value="low">Low</option>
+                <option value="critical">Critical</option>
               </select>
             </label>
             <label className="form-control">
@@ -77,18 +140,38 @@ function TaskComposerCard() {
                   Due date
                 </span>
               </div>
-              <input type="date" className="input input-bordered" readOnly />
+              <input
+                type="date"
+                className="input input-bordered"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                disabled={loading}
+              />
             </label>
           </div>
         </div>
         <div className="flex justify-end gap-3">
-          <button type="button" className="btn btn-ghost">
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={resetForm}
+            disabled={loading}
+          >
             Reset fields
           </button>
-          <button type="button" className="btn btn-primary">
-            Save task
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSubmit}
+            disabled={loading || !title.trim()}
+          >
+            {loading ? "Saving..." : "Save task"}
           </button>
         </div>
+        {error && <div className="text-error text-sm">{String(error)}</div>}
+        {success && (
+          <div className="text-success text-sm">Task created successfully</div>
+        )}
       </div>
     </div>
   );

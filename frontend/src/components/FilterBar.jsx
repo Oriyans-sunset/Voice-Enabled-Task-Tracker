@@ -3,9 +3,15 @@ function FilterBar() {
     <div className="grid gap-3 lg:grid-cols-4">
       <label className="form-control">
         <div className="label">
-          <span className="label-text text-xs uppercase tracking-[0.12em]">Status</span>
+          <span className="label-text text-xs uppercase tracking-[0.12em]">
+            Status
+          </span>
         </div>
-        <select id="filter-status" defaultValue="all" className="select select-bordered select-sm md:select-md">
+        <select
+          id="filter-status"
+          defaultValue="all"
+          className="select select-bordered select-sm md:select-md"
+        >
           <option value="all">All</option>
           <option value="todo">To Do</option>
           <option value="in-progress">In Progress</option>
@@ -14,9 +20,15 @@ function FilterBar() {
       </label>
       <label className="form-control">
         <div className="label">
-          <span className="label-text text-xs uppercase tracking-[0.12em]">Priority</span>
+          <span className="label-text text-xs uppercase tracking-[0.12em]">
+            Priority
+          </span>
         </div>
-        <select id="filter-priority" defaultValue="all" className="select select-bordered select-sm md:select-md">
+        <select
+          id="filter-priority"
+          defaultValue="all"
+          className="select select-bordered select-sm md:select-md"
+        >
           <option value="all">All</option>
           <option value="urgent">Urgent</option>
           <option value="high">High</option>
@@ -26,9 +38,15 @@ function FilterBar() {
       </label>
       <label className="form-control">
         <div className="label">
-          <span className="label-text text-xs uppercase tracking-[0.12em]">Due date</span>
+          <span className="label-text text-xs uppercase tracking-[0.12em]">
+            Due date
+          </span>
         </div>
-        <select id="filter-due" defaultValue="any" className="select select-bordered select-sm md:select-md">
+        <select
+          id="filter-due"
+          defaultValue="any"
+          className="select select-bordered select-sm md:select-md"
+        >
           <option value="any">Any time</option>
           <option value="today">Today</option>
           <option value="tomorrow">Tomorrow</option>
@@ -37,10 +55,17 @@ function FilterBar() {
       </label>
       <label className="form-control lg:col-span-1">
         <div className="label">
-          <span className="label-text text-xs uppercase tracking-[0.12em]">Search</span>
+          <span className="label-text text-xs uppercase tracking-[0.12em]">
+            Search
+          </span>
         </div>
         <label className="input input-bordered flex items-center gap-2">
-          <input id="filter-search" type="search" className="grow" placeholder="Search title or description" />
+          <input
+            id="filter-search"
+            type="search"
+            className="grow"
+            placeholder="Search title or description"
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

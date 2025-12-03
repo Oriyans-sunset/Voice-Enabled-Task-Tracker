@@ -5,14 +5,19 @@ var router = express.Router();
 var tasksController = require("../controllers/tasksController");
 var {
   validateTaskFields,
-  validateTaskPatchFields,
+  validateDueDate,
 } = require("../middleware/validateFields");
 
 /* Users CRUD */
 router.get("/", tasksController.listTasks);
 router.get("/:id", tasksController.getTask);
-router.post("/", validateTaskFields, tasksController.createTask);
-router.patch("/:id", validateTaskPatchFields, tasksController.updateTask);
+router.post(
+  "/",
+  validateTaskFields,
+  validateDueDate,
+  tasksController.createTask
+);
+router.patch("/:id", validateDueDate, tasksController.updateTask);
 router.delete("/:id", tasksController.deleteTask);
 
 module.exports = router;
