@@ -6,7 +6,12 @@ import TaskComposerCard from "../components/TaskComposerCard";
 import TaskListPreview from "../components/TaskListPreview";
 import VoiceCaptureCard from "../components/VoiceCaptureCard";
 
-const highlightTags = ["Hands-free capture", "AI field parsing", "Kanban + list views", "Filters & search"];
+const highlightTags = [
+  "Hands-free capture",
+  "AI field parsing",
+  "Kanban + list views",
+  "Filters & search",
+];
 
 const previewBoard = {
   "To Do": [
@@ -53,7 +58,13 @@ const previewList = [
     due: "Tomorrow · 6:00 PM",
     assignee: "You",
   },
-  { title: "Draft QA checklist", status: "To Do", priority: "Medium", due: "Fri · 2:00 PM", assignee: "QA" },
+  {
+    title: "Draft QA checklist",
+    status: "To Do",
+    priority: "Medium",
+    due: "Fri · 2:00 PM",
+    assignee: "QA",
+  },
   {
     title: "Refine dashboard copy",
     status: "In Progress",
@@ -61,7 +72,13 @@ const previewList = [
     due: "Today · 4:30 PM",
     assignee: "Product",
   },
-  { title: "Sync with backend team", status: "Done", priority: "Medium", due: "Yesterday", assignee: "Frontend" },
+  {
+    title: "Sync with backend team",
+    status: "Done",
+    priority: "Medium",
+    due: "Yesterday",
+    assignee: "Frontend",
+  },
 ];
 
 const stats = [
@@ -72,7 +89,10 @@ const stats = [
 ];
 
 const voiceExampleFields = [
-  { label: "Title", value: "Review the pull request for the authentication module" },
+  {
+    label: "Title",
+    value: "Review the pull request for the authentication module",
+  },
   { label: "Priority", value: "High" },
   { label: "Due Date", value: "Tomorrow · 6:00 PM" },
   { label: "Status", value: "To Do (default)" },
@@ -81,84 +101,22 @@ const voiceExampleFields = [
 function Home() {
   return (
     <div className="space-y-12">
-      <section className="card bg-gradient-to-br from-sky-500/15 via-base-200 to-amber-400/10 border border-base-300 shadow-2xl">
-        <div className="card-body grid gap-10 lg:grid-cols-2 items-center">
-          <div className="space-y-4">
-            <p className="eyebrow text-primary/80">Voice-enabled task tracker</p>
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">Speak tasks, let the tracker do the typing</h1>
-            <p className="prose-muted max-w-2xl">
-              Capture tasks by voice, parse the details automatically, and keep work moving in board or list views. Wire
-              up your APIs later — the UI scaffolding is ready.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <button type="button" className="btn btn-primary">
-                Start voice capture
-              </button>
-              <button type="button" className="btn btn-outline">
-                Add task manually
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {highlightTags.map((tag) => (
-                <div key={tag} className="badge badge-outline badge-lg border-dashed border-base-300 text-base">
-                  {tag}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="card bg-base-100/70 border border-base-300 shadow-xl">
-            <div className="card-body space-y-3">
-              <p className="text-xs uppercase tracking-[0.2em] text-primary/80">Example voice prompt</p>
-              <p className="text-lg font-semibold leading-relaxed">
-                "Create a high priority task to review the pull request for the authentication module by tomorrow
-                evening."
-              </p>
-              <div className="space-y-2">
-                {voiceExampleFields.map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center justify-between gap-3 rounded-xl bg-base-200/80 px-4 py-3 border border-base-300"
-                  >
-                    <span className="badge badge-neutral badge-outline">{item.label}</span>
-                    <span className="font-semibold text-base-content/90 text-right">{item.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="grid gap-6 lg:grid-cols-2">
         <VoiceCaptureCard />
         <TaskComposerCard />
       </section>
 
       <section className="space-y-4">
-        <SectionHeader
-          label="Snapshot"
-          title="Workspace at a glance"
-          subtitle="See how tasks will surface once you wire up persistence and logic."
-        />
         <StatsStrip stats={stats} />
       </section>
 
       <section className="space-y-4">
-        <SectionHeader
-          label="Board"
-          title="Kanban-style preview"
-          subtitle="Drag-and-drop ready columns for To Do, In Progress, and Done."
-          actionSlot={<FilterBar />}
-        />
+        <SectionHeader title="Kanban-style Board" actionSlot={<FilterBar />} />
         <TaskBoardPreview board={previewBoard} />
       </section>
 
       <section className="space-y-4">
-        <SectionHeader
-          label="List"
-          title="Compact list view"
-          subtitle="Scan tasks quickly, update fields inline, and search across title or description."
-        />
+        <SectionHeader title="List view" />
         <TaskListPreview tasks={previewList} />
       </section>
     </div>
