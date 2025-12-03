@@ -44,3 +44,5 @@ coverage
 frontend/dist
 frontend/.vite
 backend/testing/results
+
+*.sqlite

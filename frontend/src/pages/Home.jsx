@@ -6,6 +6,7 @@ import TaskComposerCard from "../components/TaskComposerCard";
 import TaskListView from "../components/TaskListView";
 import VoiceCaptureCard from "../components/VoiceCaptureCard";
 import { useTasksStore } from "../tasksStore";
+import { DndContext } from "@dnd-kit/core";
 
 function Home() {
   const tasks = useTasksStore((state) => state.tasks);
@@ -67,7 +68,9 @@ function Home() {
         {loading ? (
           <p className="text-sm opacity-70">Loading board...</p>
         ) : (
-          <KanbanView board={board} />
+          <DndContext>
+            <KanbanView board={board} />
+          </DndContext>
         )}
       </section>
 
