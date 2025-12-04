@@ -162,7 +162,9 @@ function VoiceCaptureCard() {
               </p>
             </div>
           )}
-          {isLoading && <div className="mt-2">Processing transcript...</div>}
+          {isLoading && (
+            <span className="loading loading-dots loading-md"></span>
+          )}
         </div>
         <div className="rounded-xl border border-dashed border-base-300 bg-base-200/60 p-4 space-y-3">
           <p className="text-xs uppercase tracking-[0.18em] text-base-content/70">

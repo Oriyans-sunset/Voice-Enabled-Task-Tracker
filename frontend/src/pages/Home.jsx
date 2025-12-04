@@ -6,8 +6,6 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import FilterBar from "../components/FilterBar";
-import SectionHeader from "../components/SectionHeader";
 import KanbanView from "../components/KanbanView";
 import TaskComposerCard from "../components/TaskComposerCard";
 import TaskListView from "../components/TaskListView";
@@ -49,18 +47,22 @@ function Home() {
 
   const list = useMemo(() => {
     return tasks.map((task) => ({
+      id: task.id,
       title: task.title,
       description: task.description || "",
       status: getStatusLabel(task.status),
+      statusRaw: task.status || "todo",
       priority: formatLabel(task.priority) || "",
+      priorityRaw: task.priority || "",
       due: task.dueDate ? formatDate(task.dueDate) : "",
+      dueRaw: task.dueDate || "",
     }));
   }, [tasks]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 6 },
-    }),
+    })
   );
 
   const handleDragEnd = (event) => {
@@ -76,14 +78,18 @@ function Home() {
   };
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-15">
       <section className="grid gap-6 lg:grid-cols-2">
         <VoiceCaptureCard />
         <TaskComposerCard />
       </section>
 
       <section className="space-y-4">
-        <SectionHeader title="Kanban-style Board" />
+        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-6">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold">Kanban-style Board</h2>
+          </div>
+        </div>
         {error && <p className="text-error text-sm">{String(error)}</p>}
         {loading ? (
           <p className="text-sm opacity-70">Loading board...</p>
@@ -99,12 +105,7 @@ function Home() {
       </section>
 
       <section className="space-y-4">
-        <SectionHeader title="List view" actionSlot={<FilterBar />} />
-        {loading ? (
-          <p className="text-sm opacity-70">Loading list...</p>
-        ) : (
-          <TaskListView tasks={list} />
-        )}
+        <TaskListView tasks={list} />
       </section>
     </div>
   );

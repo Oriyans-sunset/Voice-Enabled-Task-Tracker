@@ -46,6 +46,7 @@ export const useTasksStore = create((set, get) => ({
         error: err instanceof Error ? err.message : "Failed to update task",
         loading: false,
       });
+      throw err;
     }
   },
 
