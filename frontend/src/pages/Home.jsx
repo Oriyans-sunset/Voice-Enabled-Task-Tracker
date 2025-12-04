@@ -1,4 +1,11 @@
 import { useEffect, useMemo } from "react";
+import {
+  DndContext,
+  PointerSensor,
+  closestCorners,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import FilterBar from "../components/FilterBar";
 import SectionHeader from "../components/SectionHeader";
 import KanbanView from "../components/KanbanView";
@@ -6,35 +13,35 @@ import TaskComposerCard from "../components/TaskComposerCard";
 import TaskListView from "../components/TaskListView";
 import VoiceCaptureCard from "../components/VoiceCaptureCard";
 import { useTasksStore } from "../tasksStore";
-import { DndContext } from "@dnd-kit/core";
 
 function Home() {
   const tasks = useTasksStore((state) => state.tasks);
   const loading = useTasksStore((state) => state.loading);
   const error = useTasksStore((state) => state.error);
   const fetchTasks = useTasksStore((state) => state.fetchTasks);
+  const moveTask = useTasksStore((state) => state.moveTask);
 
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
   const board = useMemo(() => {
-    const result = { "To Do": [], "In Progress": [], Done: [] };
+    const result = {
+      todo: { title: "To Do", tasks: [] },
+      in_progress: { title: "In Progress", tasks: [] },
+      done: { title: "Done", tasks: [] },
+    };
     tasks.forEach((task) => {
       const status = ["todo", "in_progress", "done"].includes(task.status)
         ? task.status
         : "todo";
-      const column =
-        status === "in_progress"
-          ? "In Progress"
-          : status === "done"
-          ? "Done"
-          : "To Do";
-      result[column].push({
+      result[status].tasks.push({
+        id: task.id,
         title: task.title,
         description: task.description || "",
         priority: formatLabel(task.priority) || "",
         due: task.dueDate ? formatDate(task.dueDate) : "",
+        status,
       });
     });
     return result;
@@ -44,16 +51,29 @@ function Home() {
     return tasks.map((task) => ({
       title: task.title,
       description: task.description || "",
-      status:
-        task.status === "in_progress"
-          ? "In Progress"
-          : task.status === "done"
-          ? "Done"
-          : "To Do",
+      status: getStatusLabel(task.status),
       priority: formatLabel(task.priority) || "",
       due: task.dueDate ? formatDate(task.dueDate) : "",
     }));
   }, [tasks]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 6 },
+    }),
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const fromStatus = active.data.current?.status;
+    const toStatus = over.id;
+
+    if (!toStatus || fromStatus === toStatus) return;
+
+    moveTask(Number(active.id), toStatus);
+  };
 
   return (
     <div className="space-y-12">
@@ -68,7 +88,11 @@ function Home() {
         {loading ? (
           <p className="text-sm opacity-70">Loading board...</p>
         ) : (
-          <DndContext>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragEnd={handleDragEnd}
+          >
             <KanbanView board={board} />
           </DndContext>
         )}
@@ -88,6 +112,12 @@ function Home() {
 
 // just so we can convert raw values to more formatted labels,
 // just for UI totally optional (eg, in_progress -> In Progress)
+function getStatusLabel(status) {
+  if (status === "in_progress") return "In Progress";
+  if (status === "done") return "Done";
+  return "To Do";
+}
+
 function formatLabel(value) {
   if (!value) return "";
   return value.charAt(0).toUpperCase() + value.slice(1).replace("_", " ");

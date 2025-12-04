@@ -25,6 +25,8 @@ exports.getTask = async function (req, res, next) {
 exports.createTask = async function (req, res, next) {
   try {
     let { title, description, priority, dueDate, status } = req.body || {};
+
+    // provide default title if not given somehow
     if (!title) {
       const today = new Date();
       const formattedDate = today.toLocaleDateString("en-GB");

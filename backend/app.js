@@ -5,6 +5,8 @@ const { syncDatabase } = require("./models");
 
 var indexRouter = require("./routes/index");
 var tasksRouter = require("./routes/tasks");
+var transcriptsRouter = require("./routes/transcripts");
+const cors = require("cors");
 
 var app = express();
 
@@ -12,6 +14,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
 // initialize tables
 try {
@@ -25,6 +28,7 @@ try {
 // routes
 app.use("/", indexRouter);
 app.use("/tasks", tasksRouter);
+app.use("/transcripts", transcriptsRouter);
 
 // catch 404 and respond with JSON
 app.use(function (req, res, next) {

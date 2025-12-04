@@ -5,4 +5,6 @@ const priorityTone = {
   low: "bg-sky-600/10 text-sky-600",
 };
 
-export { priorityTone };
+const BASE_API_URL = "http://localhost:3000";
+
+export { priorityTone, BASE_API_URL };

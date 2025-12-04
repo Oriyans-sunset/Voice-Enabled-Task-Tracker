@@ -1,28 +1,11 @@
 import { create } from "zustand";
-import TasksService from "../src/services/tasksService";
-
-const tasksService = new TasksService();
+import { tasksService } from "./services/tasksService";
 
 export const useTasksStore = create((set, get) => ({
   // state variables
   tasks: [],
   loading: false,
   error: null,
-
-  // for list view
-  filters: {
-    status: null, // "todo" / "in_progress" / "done" / null for all tasks
-    priority: null, // "low" / "medium" / "high" / "critical" / null for all tasks
-    query: "",
-  },
-
-  setFilters: (partialFilters) =>
-    set((state) => ({
-      filters: {
-        ...state.filters,
-        ...partialFilters,
-      },
-    })),
 
   // fetch all tasks, store them in zustand
   fetchTasks: async () => {
@@ -80,9 +63,26 @@ export const useTasksStore = create((set, get) => ({
     }
   },
 
-  // gets tasks filtered on the frontend
-  getFilteredTasks: () => {
-    const { tasks, filters } = get();
-    return filterTasks(tasks, filters);
+  // move a task between columns without a full refetch
+  moveTask: async (taskId, newStatus) => {
+    const previousTasks = get().tasks;
+    const exists = previousTasks.some((task) => task.id === taskId);
+    if (!exists) return;
+
+    const updatedTasks = previousTasks.map((task) =>
+      task.id === taskId ? { ...task, status: newStatus } : task
+    );
+
+    set({ tasks: updatedTasks, error: null });
+
+    try {
+      await tasksService.updateTask(taskId, { status: newStatus });
+    } catch (err) {
+      set({
+        tasks: previousTasks,
+        error:
+          err instanceof Error ? err.message : "Failed to move task to column",
+      });
+    }
   },
 }));

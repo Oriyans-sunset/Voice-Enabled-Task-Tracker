@@ -29,20 +29,20 @@ function TaskComposerCard() {
     setSuccess(false);
   };
 
+  // just to make sure staus and priority are valid before submission
   const isValidStatus = (val) => STATUS.includes(val);
   const isValidPriority = (val) => PRIORITY.includes(val);
 
   const handleSubmit = async () => {
-    if (!title.trim()) return;
     setSuccess(false);
 
     if (!isValidStatus(status)) return;
     if (!isValidPriority(priority)) return;
     const payload = {
-      title: title.trim(),
-      description: description.trim() || undefined,
+      title: title.trim() || "",
+      description: description.trim() || "",
       status: status,
-      priority,
+      priority: priority,
       dueDate: dueDate || undefined,
     };
     await createTask(payload);
@@ -55,20 +55,20 @@ function TaskComposerCard() {
   return (
     <div className="card bg-base-100 shadow-xl border border-base-300 h-full">
       <div className="card-body space-y-4 h-full flex flex-col">
-        <div className="flex items-center justify-between gap-3">
+        <div>
           <span className="badge badge-soft badge-primary">Manual entry</span>
         </div>
-        <div className="space-y-2">
+        <div>
           <h3 className="card-title text-2xl">Type a task instead</h3>
         </div>
         <div className="space-y-3 flex-1 flex flex-col items-start">
-          <div className="grid gap-3 md:grid-cols-2 flex-1">
+          <div className="grid gap-3 md:grid-cols-2 flex-1 w-full">
             <div className="label">
               <span className="label-text text-xs uppercase tracking-[0.12em]">
                 Title
               </span>
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col h-ful">
               <input
                 type="text"
                 className="input input-bordered"
@@ -85,7 +85,7 @@ function TaskComposerCard() {
                 Description
               </span>
             </div>
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col">
               <textarea
                 className="textarea textarea-bordered flex-1 min-h-0"
                 placeholder="Add any additional details about the task here"
@@ -108,9 +108,9 @@ function TaskComposerCard() {
                 onChange={(e) => setStatus(e.target.value)}
                 disabled={loading}
               >
-                {UI_STATUS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
+                {UI_STATUS.map((options) => (
+                  <option key={options.value} value={options.value}>
+                    {options.label}
                   </option>
                 ))}
               </select>
@@ -168,7 +168,9 @@ function TaskComposerCard() {
             {loading ? "Saving..." : "Save task"}
           </button>
         </div>
-        {error && <div className="text-error text-sm">{String(error)}</div>}
+        {error && (
+          <div className="text-error text-sm">HTTP {String(error)}</div>
+        )}
         {success && (
           <div className="text-success text-sm">Task created successfully</div>
         )}

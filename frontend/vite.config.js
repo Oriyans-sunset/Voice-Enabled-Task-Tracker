@@ -8,6 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/tasks": "http://localhost:3000",
+      "/transcripts": "http://localhost:3000",
     },
   },
 });

@@ -24,9 +24,7 @@ function TaskListView({ tasks }) {
                   </p>
                 </td>
                 <td>
-                  <span className="badge badge-outline badge-dash">
-                    {task.status}
-                  </span>
+                  <span className="badge badge-outline">{task.status}</span>
                 </td>
 
                 <td>
