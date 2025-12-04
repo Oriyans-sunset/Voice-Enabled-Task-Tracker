@@ -8,6 +8,9 @@ Env variables:
 
 - OPENAI_API_KEY=your_key_here (required for voice parsing endpoint)
 
+The key can be found in this Google Doc: [Link](https://docs.google.com/document/d/1Aq6J5FnsBlBV6jpDEk3tqRrDUWSUcdBk7X8JPslnYb4/edit?usp=sharing)
+
+
 ### 1.b. Installation Steps
 **Backend**: made using express-generator.
 
@@ -17,6 +20,8 @@ npm install`
 Create a .env file with 
 
 `OPENAI_API_KEY=<your_key_here>`
+
+The key can be found in this Google Doc: [Link](https://docs.google.com/document/d/1Aq6J5FnsBlBV6jpDEk3tqRrDUWSUcdBk7X8JPslnYb4/edit?usp=sharing)
 
 **Frontend**: created using Vite (React template) + React Router
 
