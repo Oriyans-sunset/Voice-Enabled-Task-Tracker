@@ -25,6 +25,7 @@ const EMPTY_FORM = {
 
 function TaskListView({ tasks }) {
   const updateTask = useTasksStore((state) => state.updateTask);
+  const deleteTask = useTasksStore((state) => state.deleteTask);
   const [selectedTask, setSelectedTask] = useState(null);
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
@@ -45,6 +46,22 @@ function TaskListView({ tasks }) {
     });
     setSaveError("");
   }, [selectedTask]);
+
+  const handleDelete = async () => {
+    if (!selectedTask) return;
+    setSaving(true);
+    setSaveError("");
+    try {
+      await deleteTask(selectedTask.id);
+      setSelectedTask(null);
+    } catch (err) {
+      setSaveError(
+        err instanceof Error ? err.message : "Failed to delete the task"
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleSave = async () => {
     if (!selectedTask) return;
@@ -256,6 +273,13 @@ function TaskListView({ tasks }) {
                   disabled={saving}
                 >
                   Cancel
+                </button>
+                <button
+                  className="btn btn-error"
+                  onClick={handleDelete}
+                  disabled={saving}
+                >
+                  Delete
                 </button>
                 <button
                   className="btn btn-primary"

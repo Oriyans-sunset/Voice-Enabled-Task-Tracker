@@ -9,15 +9,11 @@ exports.sendTranscript = async function (req, res) {
     let task = await parseTranscriptToTask(transcripts);
     console.log("Parsed task:", task);
 
-    // mock task
-    const mockTask = {
-      id: 1,
-      title: "new task from voice",
-      description: "this task was created from voice transcript",
-      status: "done",
-      priority: "low",
-      dueDate: "2025-12-31 18:00:00.000 +00:00",
-    };
+    if (!task) {
+      return res
+        .status(400)
+        .json({ message: "LLM could not parse any task information." });
+    }
 
     return res.status(201).json(task);
   } catch (err) {

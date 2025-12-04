@@ -77,7 +77,9 @@ function VoiceCaptureCard() {
       setTranscript("");
     } catch (err) {
       console.error("Failed to process voice transcript", err);
+      alert("LLM could not parse any task information.");
       setIsLoading(false);
+      setTranscript("");
     }
   };
 

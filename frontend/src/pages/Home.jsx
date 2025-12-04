@@ -85,11 +85,8 @@ function Home() {
       </section>
 
       <section className="space-y-4">
-        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-6">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-semibold">Kanban-style Board</h2>
-          </div>
-        </div>
+        <h2 className="text-2xl font-semibold">Kanban-style Board</h2>
+
         {error && <p className="text-error text-sm">{String(error)}</p>}
         {loading ? (
           <p className="text-sm opacity-70">Loading board...</p>
@@ -105,6 +102,7 @@ function Home() {
       </section>
 
       <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">List-style View</h2>
         <TaskListView tasks={list} />
       </section>
     </div>

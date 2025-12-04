@@ -2,13 +2,6 @@ import { Outlet } from "react-router-dom";
 import icon from "../assets/icon.png";
 
 function MainLayout() {
-  const navClass = ({ isActive }) =>
-    `btn btn-sm md:btn-md btn-ghost rounded-full ${
-      isActive
-        ? "bg-base-200 text-primary font-semibold"
-        : "text-base-content/70 hover:text-base-content"
-    }`;
-
   return (
     <div className="min-h-screen bg-base-200 text-base-content">
       <header className="sticky top-0 z-20 border-b border-base-300 bg-base-100/80 backdrop-blur">

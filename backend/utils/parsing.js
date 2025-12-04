@@ -41,7 +41,9 @@ Return ONLY valid JSON:
   "status": "the extracted status",
   "priority": "the extracted priority",
   "dueDate": "the extrapolated dueDate",
-}`;
+}
+  IF TRANSCRIPT DOES NOT CONTAIN ANY TASK INFORMATION, RETURN AN EMPTY JSON OBJECT: {}.
+  `;
 
   try {
     const response = await client.chat.completions.create({
@@ -59,6 +61,9 @@ Return ONLY valid JSON:
       .trim();
 
     console.log("LLM Response:", content);
+    if (content === "{}") {
+      return null; // No task information found
+    }
 
     let parsed;
     try {

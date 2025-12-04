@@ -157,7 +157,7 @@ function TaskComposerCard() {
             onClick={resetForm}
             disabled={loading}
           >
-            Reset fields
+            Reset
           </button>
           <button
             type="button"
