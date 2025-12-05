@@ -5,6 +5,19 @@ const priorityTone = {
   low: "bg-sky-600/10 text-sky-600",
 };
 
+const STATUS = [
+  { value: "todo", label: "To Do" },
+  { value: "in_progress", label: "In Progress" },
+  { value: "done", label: "Done" },
+];
+
+const PRIORITY = [
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+  { value: "critical", label: "Critical" },
+];
+
 const BASE_API_URL = "http://localhost:3000";
 
-export { priorityTone, BASE_API_URL };
+export { priorityTone, STATUS, PRIORITY, BASE_API_URL };

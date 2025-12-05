@@ -1,19 +1,7 @@
 import { useEffect, useState } from "react";
 import { priorityTone } from "../constants/const";
 import { useTasksStore } from "../tasksStore";
-
-const STATUS = [
-  { value: "todo", label: "To Do" },
-  { value: "in_progress", label: "In Progress" },
-  { value: "done", label: "Done" },
-];
-
-const PRIORITY = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
-  { value: "critical", label: "Critical" },
-];
+import { STATUS, PRIORITY } from "../constants/const";
 
 const EMPTY_FORM = {
   title: "",
@@ -148,6 +136,7 @@ function TaskListView({ tasks }) {
         </div>
       </div>
 
+      {/* Styling help from ChatGPT-codex */}
       {selectedTask ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="card w-full max-w-2xl bg-base-100 shadow-2xl border border-base-300">

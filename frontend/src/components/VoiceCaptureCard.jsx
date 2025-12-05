@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { tasksService } from "../services/tasksService";
 import { useTasksStore } from "../tasksStore";
 
-const sampleFields = [
+const exampleFields = [
   { label: "Title", value: "Review PR for authentication module" },
   { label: "Priority", value: "High" },
   { label: "Due Date", value: "7/12/2025" },
@@ -131,6 +131,9 @@ function VoiceCaptureCard() {
     };
   };
 
+  {
+    /* some styling help from ChatGPT-codex */
+  }
   return (
     <div className="card bg-base-100 shadow-xl border border-base-300">
       <div className="card-body space-y-4">
@@ -177,7 +180,7 @@ function VoiceCaptureCard() {
             authentication module by tomorrow evening."
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
-            {sampleFields.map((field) => (
+            {exampleFields.map((field) => (
               <div
                 key={field.label}
                 className="rounded-lg bg-base-100 border border-base-300 p-3 space-y-1"

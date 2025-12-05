@@ -51,6 +51,7 @@ function KanbanColumn({ columnId, title, tasks = [] }) {
   );
 }
 
+// Fixed errors in this compoenent using Claude
 function KanbanCard({ task }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({

@@ -127,7 +127,6 @@ function TaskComposerCard() {
                 onChange={(e) => setPriority(e.target.value)}
                 disabled={loading}
               >
-                {/* categoires are critical|high|medium|low */}
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
                 <option value="low">Low</option>

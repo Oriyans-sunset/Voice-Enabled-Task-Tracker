@@ -55,6 +55,8 @@ Return ONLY valid JSON:
     });
 
     const raw = response.choices[0].message.content.trim();
+
+    // Code snippet generated using ChatGPT-codex
     const content = raw
       .replace(/^```(?:json)?\s*/i, "")
       .replace(/```$/i, "")

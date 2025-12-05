@@ -32,16 +32,15 @@ app.use("/transcripts", transcriptsRouter);
 
 // catch 404 and respond with JSON
 app.use(function (req, res, next) {
-  res.status(404).json({ error: "Not Found" });
+  res.status(404).json({ error: "Route Not Found" });
 });
 
-// error handler (JSON)
+// error handler middelware
 app.use(function (err, req, res, next) {
   const status = err.status || 500;
-  const isDev = req.app.get("env") === "development";
   res.status(status).json({
-    message: err.message,
-    ...(isDev ? { stack: err.stack } : {}),
+    message: err.message || "Internal Server Error",
+    stack: err.stack,
   });
 });
 

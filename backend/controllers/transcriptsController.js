@@ -1,6 +1,6 @@
 const { parseTranscriptToTask } = require("../utils/parsing");
 
-exports.sendTranscript = async function (req, res) {
+exports.sendTranscript = async function (req, res, next) {
   try {
     let { transcripts } = req.body;
     console.log("Received transcript:", transcripts);
@@ -18,6 +18,6 @@ exports.sendTranscript = async function (req, res) {
     return res.status(201).json(task);
   } catch (err) {
     console.error("Error processing transcript:", err);
-    return res.status(500).json({ message: "Internal server error" });
+    next(err);
   }
 };
