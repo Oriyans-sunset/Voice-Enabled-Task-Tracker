@@ -27,8 +27,11 @@ function validateDueDate(req, res, next) {
   if (Number.isNaN(parsedDueDate.getTime())) {
     return res.status(400).json({ message: "Invalid dueDate" });
   }
-  const now = new Date();
-  if (parsedDueDate < now) {
+  const parsedDateOnly = new Date(parsedDueDate);
+  parsedDateOnly.setHours(0, 0, 0, 0);
+  const nowDateOnly = new Date();
+  nowDateOnly.setHours(0, 0, 0, 0);
+  if (parsedDateOnly <= nowDateOnly) {
     return res.status(400).json({
       message: "Due date cannot be earlier than the current date",
     });
