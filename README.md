@@ -142,21 +142,18 @@ Parses natural speech into task fields.
 Request:
 `
 {
-  "transcript": "remind me to test the dashboard tomorrow at 5 pm"
+  "transcripts": "remind me to test the dashboard tomorrow at 5 pm"
 }
 `
 
 Response:
 `
 {
-  "transcript": "remind me to test the dashboard tomorrow at 5 pm",
-  "parsed": {
     "title": "Test dashboard",
     "description": "",
     "status": "todo",
     "priority": "medium",
     "dueDate": "2025-01-03T17:00:00Z"
-  }
 }
 `
 
@@ -203,4 +200,5 @@ Tools Used:
 - ChatGPT (GPT-5): for researching libraries and packages (daisyUI, sequalize, react-hoook-form (even though not utilised))
 - GPT5-codex: used for assisting in generating certain functions and debugging.
 - AI assisted in generating boilerplate for the drag and drop of the kanban board as this was my first time implementing such a feature, but I customized and integrated it with my task model and state management.
-_ Functions and code made via AI has been marked as such with in-line comments inside the project._
+  
+_Functions and code made via AI has been marked as such with in-line comments inside the project._
